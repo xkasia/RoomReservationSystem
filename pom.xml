@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<parent>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-parent</artifactId>
+<version>2.1.1.RELEASE</version>
+<relativePath/> <!-- lookup parent from repository -->
+</parent>
+<groupId>pl.hit.system</groupId>
+<artifactId>RoomSystem</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<name>RoomReservationSystem</name>
+<description></description>
+
+<properties>
+<java.version>1.8</java.version>
+</properties>
+
+<dependencies>
+
+		<!-- web application -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Tomcat embedded container-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSTL for JSP -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<!-- Need this to compile JSP -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Need this to compile JSP,
+			tomcat-embed-jasper version is not working, no idea why -->
+		<dependency>
+			<groupId>org.eclipse.jdt.core.compiler</groupId>
+			<artifactId>ecj</artifactId>
+			<version>4.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--&lt;!&ndash; Optional, test for static content, bootstrap CSS&ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.webjars</groupId>-->
+			<!--<artifactId>bootstrap</artifactId>-->
+			<!--<version>3.3.7</version>-->
+		<!--</dependency>-->
+
+			<!--jpa-->
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+        </dependency>
+
+		<dependency>
+		<groupId>com.h2database</groupId>
+		<artifactId>h2</artifactId>
+		<scope>runtime</scope>
+		</dependency>
+
+</dependencies>
+	<build>
+		<plugins>
+			<!-- Package as an executable jar/war -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
+
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+	<!--xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+	<!--<modelVersion>4.0.0</modelVersion>-->
+	<!--<parent>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-parent</artifactId>-->
+		<!--<version>2.1.1.RELEASE</version>-->
+		<!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+	<!--</parent>-->
+	<!--<groupId>pl.hit.system</groupId>-->
+	<!--<artifactId>RoomSystem</artifactId>-->
+	<!--<version>0.0.1-SNAPSHOT</version>-->
+	<!--<name>RoomReservationSystem</name>-->
+	<!--<description></description>-->
+
+	<!--<properties>-->
+		<!--<java.version>1.8</java.version>-->
+	<!--</properties>-->
+
+	<!--<dependencies>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-web</artifactId>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>com.h2database</groupId>-->
+			<!--<artifactId>h2</artifactId>-->
+			<!--<scope>runtime</scope>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-test</artifactId>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash;&lt;!&ndash; Compile &ndash;&gt;&ndash;&gt;-->
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>spring-boot-starter-web</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>javax.servlet</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>jstl</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+		<!--&lt;!&ndash;&lt;!&ndash; Provided &ndash;&gt;&ndash;&gt;-->
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>spring-boot-starter-tomcat</artifactId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>org.apache.tomcat.embed</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>tomcat-embed-jasper</artifactId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<scope>provided</scope>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>org.thymeleaf</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>thymeleaf</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+
+		<!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+			<!--&lt;!&ndash;<groupId>org.thymeleaf</groupId>&ndash;&gt;-->
+			<!--&lt;!&ndash;<artifactId>thymeleaf-spring4</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+
+		<!--&lt;!&ndash; JSTL &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>javax.servlet</groupId>-->
+			<!--<artifactId>jstl</artifactId>-->
+		<!--</dependency>-->
+		<!--&lt;!&ndash; To compile JSP files &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.apache.tomcat.embed</groupId>-->
+			<!--<artifactId>tomcat-embed-jasper</artifactId>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash;inne&ndash;&gt;-->
+
+		<!--&lt;!&ndash; JSTL for JSP &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>javax.servlet</groupId>-->
+			<!--<artifactId>jstl</artifactId>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash; Need this to compile JSP &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.apache.tomcat.embed</groupId>-->
+			<!--<artifactId>tomcat-embed-jasper</artifactId>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
+
+		<!--&lt;!&ndash; Need this to compile JSP,-->
+			<!--tomcat-embed-jasper version is not working, no idea why &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.eclipse.jdt.core.compiler</groupId>-->
+			<!--<artifactId>ecj</artifactId>-->
+			<!--<version>4.6.1</version>-->
+			<!--<scope>provided</scope>-->
+		<!--</dependency>-->
+
+	<!--</dependencies>-->
+
+	<!--<build>-->
+		<!--<plugins>-->
+			<!--<plugin>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+			<!--</plugin>-->
+		<!--</plugins>-->
+	<!--</build>-->
+
+<!--</project>-->

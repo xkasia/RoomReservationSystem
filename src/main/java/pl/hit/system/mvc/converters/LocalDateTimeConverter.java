@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 
 @Component
 @ReadingConverter
-public class LocalDateTimeConverter implements Converter<String, LocalDateTime>, AttributeConverter<LocalDateTime, Timestamp> {
+public class LocalDateTimeConverter implements Converter<String, LocalDateTime>,
+        AttributeConverter<LocalDateTime, Timestamp> {
 
     @Override
     public LocalDateTime convert(String s) {
@@ -30,7 +31,7 @@ public class LocalDateTimeConverter implements Converter<String, LocalDateTime>,
 
     @Override
     public LocalDateTime convertToEntityAttribute(Timestamp ts) {
-        if(ts!=null){
+        if (ts != null) {
             return ts.toLocalDateTime();
         }
         return null;

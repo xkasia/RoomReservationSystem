@@ -26,7 +26,9 @@
                     <td>${reservation.user.login}</td>
                     <td>${reservation.reservationStart}</td>
                     <td>${reservation.reservationEnd}</td>
-                    <td><a href="/reservation/delete/${reservation.id}">Delete.</a></td>
+                    <td>
+                        <a href="/reservation/delete/${reservation.id}">Delete.</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

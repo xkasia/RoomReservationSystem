@@ -25,27 +25,27 @@ public class UserController {
     }
 
     @GetMapping("/data")
-    public String giveUserData(HttpSession session, Model model){
+    public String giveUserData(HttpSession session, Model model) {
         LoggedUserDTO user = (LoggedUserDTO) session.getAttribute("user");
         model.addAttribute(user);
         return "/user/data";
     }
 
     @GetMapping("/update")
-    public String showUpdatePage(){
+    public String showUpdatePage() {
         return "user/update";
     }
 
     @PostMapping("/update")
-    public String update(String firstName, String lastName, String password, HttpSession session
-                         ) throws IOException {
+    public String update(String firstName, String lastName, String password,
+                         HttpSession session) throws IOException {
         LoggedUserDTO loggedUser = (LoggedUserDTO) session.getAttribute("user");
 
         userService.updateUser(loggedUser, firstName, lastName, password);
 
         LoggedUserDTO updatedUser = userService.getUser(loggedUser.getLogin(), password);
 
-        System.out.println("Updated user name" + updatedUser.getFirstName() );
+        System.out.println("Updated user name" + updatedUser.getFirstName());
 
         session.setAttribute("user", updatedUser);
 
@@ -54,27 +54,21 @@ public class UserController {
 
 
     @GetMapping("delete")
-    public String showDeletePage(){
-
+    public String showDeletePage() {
         return "/user/delete";
     }
 
     @PostMapping("delete")
-    public String delete(HttpSession session, String delete){
+    public String delete(HttpSession session, String delete) {
 
 
-        if(delete.equals("yes")){
+        if (delete.equals("yes")) {
             LoggedUserDTO user = (LoggedUserDTO) session.getAttribute("user");
             userService.deleteUser(user);
             session.invalidate();
-
             return "redirect:/home";
-        }
-        else{
+        } else {
             return "/user/data";
         }
-
     }
-
-
 }

@@ -17,9 +17,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Room getRoomByName(String roomName);
 
     @Modifying
-    @Query(nativeQuery = true, value ="UPDATE rooms SET name=?2,location= ?3, " +
+    @Query(nativeQuery = true, value = "UPDATE rooms SET name=?2,location= ?3, " +
             "number_of_seats = ?4, projector = ?5,  phone_number= ?6 WHERE id = ?1")
-    void updateRoom(Long id, String name, String location, Integer numberOfSeats, String projector, String phoneNumber);
+    void updateRoom(Long id, String name, String location, Integer numberOfSeats,
+                    String projector, String phoneNumber);
 
 
     @Modifying
@@ -36,8 +37,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query(nativeQuery = true, value =
             "Insert into rooms(name, location, number_of_seats, projector, phone_number)" +
                     "values(?1, ?2, ?3, ?4, ?5 )")
-    void saveRoomInDb(String name, String location, Integer numberOfSeats, Boolean projector, String phoneNumber);
-
+    void saveRoomInDb(String name, String location, Integer numberOfSeats,
+                      Boolean projector, String phoneNumber);
 
 
     @Query(nativeQuery = true, value =

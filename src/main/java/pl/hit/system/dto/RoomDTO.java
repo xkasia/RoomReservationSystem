@@ -1,19 +1,20 @@
 package pl.hit.system.dto;
 
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class RoomDTO {
 
     private Long id;
 
-    @NotEmpty(message = "{name.notEmpty")  @Length(max=50, message = "{name.lenght}")
+    @NotEmpty(message = "{name.notEmpty")
+    @Length(max = 50, message = "{name.lenght}")
     private String name;
 
-    @Length(max=258, message = "{location.length}")
+    @Length(max = 258, message = "{location.length}")
     private String location;
 
     @NotEmpty(message = "{numberOfSeats.notEmpty}")
@@ -22,7 +23,7 @@ public class RoomDTO {
 
     private Boolean projector;
 
-    @Length(max=100, message = "{phoneNumber.length}")
+    @Length(max = 100, message = "{phoneNumber.length}")
     private String phoneNumber;
 
 
@@ -100,6 +101,4 @@ public class RoomDTO {
 
         return Objects.hash(id);
     }
-
-
 }

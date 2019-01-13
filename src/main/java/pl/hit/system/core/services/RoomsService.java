@@ -48,7 +48,7 @@ public class RoomsService {
 
         Room room = roomRepository.getRoomByName(roomName);
 
-        if(room!=null){
+        if (room != null) {
             roomDTO = new RoomDTO(room.getId(), room.getName(), room.getLocation(), room.getNumberOfSeats(),
                     room.getProjector(), room.getPhoneNumber());
         }
@@ -70,10 +70,10 @@ public class RoomsService {
 
         if (room.getReservation() != null) {
             List<Reservation> roomReservations = room.getReservation();
-            for (int i = 0; i <roomReservations.size() ; i++) {
+            for (int i = 0; i < roomReservations.size(); i++) {
                 reservationRepository.delete(roomReservations.get(i));
             }
-           room.setReservation(null);
+            room.setReservation(null);
         }
 
         roomRepository.deleteRoom(room.getId());
@@ -96,7 +96,7 @@ public class RoomsService {
         room.setPhoneNumber(roomDTO.getPhoneNumber());
 
         roomRepository.saveRoomInDb(room.getName(), room.getLocation(), room.getNumberOfSeats(),
-        room.getProjector(), room.getPhoneNumber());
+                room.getProjector(), room.getPhoneNumber());
 
     }
 
@@ -106,7 +106,7 @@ public class RoomsService {
         RoomDTO roomDTO = null;
         Room room = roomRepository.getRoomById(roomId);
 
-        if(room!=null){
+        if (room != null) {
             roomDTO = new RoomDTO(room.getId(), room.getName(), room.getLocation(), room.getNumberOfSeats(),
                     room.getProjector(), room.getPhoneNumber());
         }

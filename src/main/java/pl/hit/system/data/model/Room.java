@@ -13,30 +13,23 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition="VARCHAR", length = 50, nullable = false, unique = true)
+    @Column(columnDefinition = "VARCHAR", length = 50, nullable = false, unique = true)
     private String name;
 
-    @Column(columnDefinition="VARCHAR", length = 256)
+    @Column(columnDefinition = "VARCHAR", length = 256)
     private String location;
 
-    @Column(name = "number_of_seats", length = 100, columnDefinition="INT", nullable = false)
+    @Column(name = "number_of_seats", length = 100, columnDefinition = "INT", nullable = false)
     private Integer numberOfSeats;
 
-    @Column(columnDefinition="BOOLEAN default false")
+    @Column(columnDefinition = "BOOLEAN default false")
     private Boolean projector;
 
-    @Column(name = "phone_number", columnDefinition="VARCHAR", length = 100)
+    @Column(name = "phone_number", columnDefinition = "VARCHAR", length = 100)
     private String phoneNumber;
 
-    @OneToMany (mappedBy = "room")
+    @OneToMany(mappedBy = "room")
     private List<Reservation> reservation;
-
-    //@OneToOne(mappedBy = "room", fetch = FetchType.LAZY)
-   // private Reservation reservation;
-
-//    @Cascade({org.hibernate.annotations.CascadeType.ALL})
-//    @ManyToMany(mappedBy = "rooms")
-//    Set<User> users = new HashSet<>();
 
     public Room() {
     }

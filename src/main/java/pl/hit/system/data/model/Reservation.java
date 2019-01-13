@@ -12,11 +12,9 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   // @OneToOne(fetch = FetchType.LAZY)
     @ManyToOne
     private Room room;
 
-    //@OneToOne(fetch = FetchType.LAZY)
     @ManyToOne
     private User user;
 
@@ -28,7 +26,6 @@ public class Reservation {
 
     public Reservation() {
     }
-
 
 
     public Long getId() {

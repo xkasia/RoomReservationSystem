@@ -14,31 +14,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, name = "first_name", length=50, columnDefinition="VARCHAR")
+    @Column(nullable = false, name = "first_name", length = 50, columnDefinition = "VARCHAR")
     private String firstName;
 
 
-    @Column(nullable = false, name = "last_name", length=100, columnDefinition="VARCHAR")
+    @Column(nullable = false, name = "last_name", length = 100, columnDefinition = "VARCHAR")
     private String lastName;
 
 
-    @Column(nullable = false, columnDefinition="VARCHAR", length = 100)
+    @Column(nullable = false, columnDefinition = "VARCHAR", length = 100)
     private String password;
 
-    @Column(unique = true, nullable = false, length=100, columnDefinition="VARCHAR")
+    @Column(unique = true, nullable = false, length = 100, columnDefinition = "VARCHAR")
     private String login;
 
-    @OneToMany (mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Reservation> reservation;
-   // private Reservation reservation;
-
-//    @Cascade({org.hibernate.annotations.CascadeType.ALL})
-//    @ManyToMany
-//    @JoinTable(name = "user_rooms",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns =@JoinColumn(name = "room_id"))
-//    Set<Room> rooms = new HashSet<>();
-
 
     public User() {
     }

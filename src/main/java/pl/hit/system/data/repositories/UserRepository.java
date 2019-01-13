@@ -35,19 +35,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
                       String password);
 
 
-    /// WHERE IS NOT NULL????11
     @Modifying
-    @Query(nativeQuery = true, value ="UPDATE users SET first_name=?2,last_name= ?3, " +
+    @Query(nativeQuery = true, value = "UPDATE users SET first_name=?2,last_name= ?3, " +
             "password = ?4 WHERE login = ?1")
-        // @Query(nativeQuery = true, value ="UPDATE USERS SET ")
     void updateUser(String loggedUserLogin, String firstName, String lastName, String password);
-
-//    /// WHERE IS NOT NULL????11
-//    @Modifying
-//    @Query(nativeQuery = true, value ="UPDATE users SET ?2=?3, " +
-//            "WHERE login = ?1")
-//    // @Query(nativeQuery = true, value ="UPDATE USERS SET ")
-//    void updateUser(String loggedUserLogin, String name, String value);
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM users WHERE login = ?1")
@@ -55,7 +46,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User getUserByLogin(String login);
 
-//    @Modifying
-//    @Query(value = "SELECT s FROM User u JOIN u.rooms ur WHERE u.id = ?1")
-//    List<Room> findAllRoomsForUser(Long id);
 }

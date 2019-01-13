@@ -12,7 +12,6 @@
         <a id="logo-container" href="/home">Home</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="/home/about">About system</a></li>
-            <%--<li><a href="/home/contact">Contact</a></li>--%>
             <li><a href="/user/data">Account</a></li>
             <li><a href="/reservation/make">Book room</a></li>
             <li><a href="/reservation/show/all">All reservtions</a></li>

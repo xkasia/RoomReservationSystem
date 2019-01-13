@@ -26,22 +26,24 @@ public class HomeController {
     }
 
     @GetMapping
-    public String giveHomePage(){
+    public String giveHomePage() {
         return "/home";
     }
 
     @GetMapping("/register")
-    public String showRegisterPage(){
+    public String showRegisterPage() {
         return "/register";
     }
 
     @PostMapping("/register")
-    public void register(String firstName, String lastName, String password, String login,
-                         HttpServletResponse response, HttpSession session) throws IOException {
+    public void register(String firstName, String lastName, String password,
+                         String login, HttpServletResponse response,
+                         HttpSession session) throws IOException {
         boolean checkIfUserExists = userService.checkIfUserExists(login);
 
-        if(checkIfUserExists){
-            response.sendError(401, "Such user exists in our system. Please try again.");
+        if (checkIfUserExists) {
+            response.sendError(401, "Such user exists in our system. " +
+                    "Please try again.");
             return;
         }
 
@@ -58,15 +60,16 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage(){
+    public String showLoginPage() {
         return "login";
     }
 
     @PostMapping("/login")
-    public void login(String login, String password, HttpSession session, HttpServletResponse response,
+    public void login(String login, String password, HttpSession session,
+                      HttpServletResponse response,
                       Model model) throws IOException {
         boolean validCredentials = userService.checkCredentials(login, password);
-        if(!validCredentials){
+        if (!validCredentials) {
             response.sendError(401, "Valid login data");
             return;
         }
@@ -74,20 +77,16 @@ public class HomeController {
         session.setAttribute("user", user);
         model.addAttribute("user", user);
         response.sendRedirect("/home");
-
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/home";
     }
 
     @GetMapping("about")
-    public String about(){
+    public String about() {
         return "/about";
     }
-
-
-
 }

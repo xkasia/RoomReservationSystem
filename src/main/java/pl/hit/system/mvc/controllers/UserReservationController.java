@@ -1,6 +1,5 @@
 package pl.hit.system.mvc.controllers;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import pl.hit.system.core.services.RoomsService;
 import pl.hit.system.core.services.UserService;
 import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.ReservationDTO;
-import pl.hit.system.dto.RoomDTO;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -28,20 +26,23 @@ public class UserReservationController {
 
     private Long reservationId;
 
-    public UserReservationController(UserService userService, RoomsService roomsService, ReservationService reservationService) {
+    public UserReservationController(UserService userService,
+                                     RoomsService roomsService,
+                                     ReservationService reservationService) {
         this.userService = userService;
         this.roomsService = roomsService;
         this.reservationService = reservationService;
     }
 
     @GetMapping("show/reservations")
-    public String showPagePresentBookingScheduleForAllRooms(Model model, HttpSession session){
+    public String showPagePresentBookingScheduleForAllRooms(Model model,
+                                                            HttpSession session) {
 
         LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
 
         List<ReservationDTO> reservationDTO = reservationService.getUserReservations(userDTO);
 
-        model.addAttribute("reservations",reservationDTO);
+        model.addAttribute("reservations", reservationDTO);
         return "/user/reservation/all";
     }
 
@@ -53,49 +54,12 @@ public class UserReservationController {
     }
 
     @PostMapping("delete/reservation")
-    public String deleteReservation(String delete){
-        if(delete.equals("yes")) {
+    public String deleteReservation(String delete) {
+        if (delete.equals("yes")) {
             ReservationDTO reservationDTO = reservationService.getReservation(reservationId);
             reservationService.deleteReservation(reservationDTO);
         }
         return "redirect:/user/show/reservations";
     }
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("allRooms")
-//    public String showRooms(Model model, LoggedUserDTO user){
-//        List<RoomDTO> rooms = roomsService.getAllRooms();
-//
-//        System.out.println("Rooms" + rooms.toString());
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("room", rooms);
-//
-//        return "/rooms/show";
-//    }
-
-
-
-//    @GetMapping("book")
-//    public void book (Model model, LoggedUserDTO user){
-//
-//    }
-
-
-//    @GetMapping("/rooms")
-//    public String getUserRoomsPage(Model model, @SessionAttribute LoggedUserDTO user){
-//        List<RoomDTO> userRooms = userService.getRoomsForUser(user);
-//
-//        return "/user/data";
-//    }
-
 
 }

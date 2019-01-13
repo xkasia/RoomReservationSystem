@@ -21,9 +21,11 @@
         <div>
             <p>Are you sure, that you want to delete your account?</p>
             <div class="input-field s6">
-                <select class="browser-default waves-effect waves-light btn" required="required" name="delete" id="delete">=
-                    <option value="" disabled="" selected="">Choose option</option>
-                        <option value="yes">Yes, delete my account.</option>
+                <select class="browser-default waves-effect waves-light btn"
+                        required="required" name="delete" id="delete">=
+                    <option value="" disabled="" selected="">Choose option
+                    </option>
+                    <option value="yes">Yes, delete my account.</option>
                     <option value="no">No.</option>
                 </select>
 
@@ -33,7 +35,6 @@
             <input type="submit" value="Submit"/>
         </fieldset>
     </form>
-
 </div>
 </div>
 </body>

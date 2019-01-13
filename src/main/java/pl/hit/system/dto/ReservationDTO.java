@@ -4,11 +4,9 @@ import pl.hit.system.data.model.Room;
 import pl.hit.system.data.model.User;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class ReservationDTO {
-
 
     private Long id;
     private Room room;

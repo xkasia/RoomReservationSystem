@@ -18,10 +18,14 @@
 <p>Please fill in this form to create new user.</p>
 <title>Register form</title>
 <form method="post" action="/admin/user/add">
-    Name <input name="firstName", type="text", maxlength="50", required="required">  </br>  </br>
-    Last Name <input name="lastName", type="text", maxlength="100", required="required"> </br>  </br>
-    Password <input name="password", type="password", minlength="6", maxlength="100", required="required"> </br>  </br>
-    login <input name="login", type="text", maxlength="100", required="required" > </br>  </br>
+    Name <input name="firstName" , type="text" , maxlength="50" ,
+                required="required">  </br>  </br>
+    Last Name <input name="lastName" , type="text" , maxlength="100" ,
+                     required="required"> </br>  </br>
+    Password <input name="password" , type="password" , minlength="6" ,
+                    maxlength="100" , required="required"> </br>  </br>
+    login <input name="login" , type="text" , maxlength="100" ,
+                 required="required"> </br>  </br>
     <fieldset>
         <input type="submit" value="Create"/>
     </fieldset>

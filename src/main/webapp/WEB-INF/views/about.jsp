@@ -21,8 +21,8 @@
 <div class="container">
     <div class="row center"><h2>About system:</h2>
         <p>This system is about room reservation.</br>
-
-            If you have any questions please feel free to contact administrator:</br>
+            If you have any questions please feel free to contact
+            administrator:</br>
             katarzynalesniaak@gmail.com
         </p>
     </div>

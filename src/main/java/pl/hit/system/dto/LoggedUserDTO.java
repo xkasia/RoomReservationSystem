@@ -11,27 +11,24 @@ public class LoggedUserDTO {
     @NotNull
     private Long id;
 
-    @NotEmpty(message = "{firstName.notEmpty}") @Length(max=50, message = "{firstName.length}")
+    @NotEmpty(message = "{firstName.notEmpty}")
+    @Length(max = 50, message = "{firstName.length}")
     private String firstName;
 
-    @NotEmpty(message = "{lastName.notEmpty}") @Length(max=100, message = "{lastName.length}")
+    @NotEmpty(message = "{lastName.notEmpty}")
+    @Length(max = 100, message = "{lastName.length}")
     private String lastName;
 
-    @NotEmpty(message = "{password.notEmpty}") @Length(min=6, max=100, message = "{password.length}")
+    @NotEmpty(message = "{password.notEmpty}")
+    @Length(min = 6, max = 100, message = "{password.length}")
     private String password;
 
-    @NotEmpty(message = "{login.notEmpty}") @Length(max=100, message = "{login.length}")
+    @NotEmpty(message = "{login.notEmpty}")
+    @Length(max = 100, message = "{login.length}")
     private String login;
 
     public LoggedUserDTO() {
     }
-
-//    public LoggedUserDTO(String firstName, String lastName, String password, String login) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.password = password;
-//        this.login = login;
-//    }
 
     public LoggedUserDTO(Long id, String firstName, String lastName, String password, String login) {
         this.id = id;
@@ -105,6 +102,4 @@ public class LoggedUserDTO {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
-
-
 }

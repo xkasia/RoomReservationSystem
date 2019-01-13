@@ -34,8 +34,10 @@
                     <td>${user.firstName}</td>
                     <td>${user.lastName}</td>
                     <td>${user.login}</td>
-                    <td><a href="/admin/user/update/${user.login}">Update.</a></td>
-                    <td><a href="/admin/user/delete/${user.login}">Delete.</a></td>
+                    <td><a href="/admin/user/update/${user.login}">Update.</a>
+                    </td>
+                    <td><a href="/admin/user/delete/${user.login}">Delete.</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -44,52 +46,3 @@
 </div>
 </body>
 </html>
-
-
-
-
-
-
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%--<%@ page isELIgnored="false" %>--%>
-<%--<html>--%>
-<%--<head>--%>
-    <%--<title>Show Users</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-
-<%--<jsp:include page="../../elements/menu.jsp"/>--%>
-
-<%--<div class="container">--%>
-    <%--<div class="row center"><h2>Users</h2>--%>
-        <%--<table>--%>
-            <%--<thead>--%>
-            <%--<tr>--%>
-                <%--<th>Lp.</th>--%>
-                <%--<th>First name</th>--%>
-                <%--<th>Last Name</th>--%>
-                <%--<th>Login</th>--%>
-            <%--</tr>--%>
-            <%--</thead>--%>
-            <%--<tbody>--%>
-            <%--<c:forEach items="${user}" var="user" varStatus="status">--%>
-                <%--<tr>--%>
-                    <%--<td>${status.index + 1}.</td>--%>
-                    <%--<td>${user.firstName}</td>--%>
-                    <%--<td>${user.lastName}</td>--%>
-                    <%--<td>${user.login}</td>--%>
-                    <%--<td><a href="/admin/user/update/${user.login}">Update.</a></td>--%>
-                    <%--<td><a href="/admin/user/delete/${user.login}">Delete.</a></td>--%>
-                <%--</tr>--%>
-            <%--</c:forEach>--%>
-            <%--</tbody>--%>
-        <%--</table>--%>
-        <%--<a href="/admin/user/add">Add new user.</a>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
-
-<%--</body>--%>
-<%--</html>--%>

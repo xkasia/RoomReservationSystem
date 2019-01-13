@@ -17,12 +17,14 @@
 <body>
 <jsp:include page="../../elements/menu.jsp"/>
 <div>
-    <form method="post" action="user/delete/reservation">
+    <form method="post" action="/admin/room/delete">
         <div>
             <p>Are you sure, that you want to delete your this room?</p>
             <div class="input-field s6">
-                <select class="browser-default waves-effect waves-light btn" required="required" name="delete" id="delete">=
-                    <option value="" disabled="" selected="">Choose option</option>
+                <select class="browser-default waves-effect waves-light btn"
+                        required="required" name="delete" id="delete">=
+                    <option value="" disabled="" selected="">Choose option
+                    </option>
                     <option value="yes">Yes, delete room.</option>
                     <option value="no">No.</option>
                 </select>
@@ -32,37 +34,8 @@
             <input type="submit" value="Submit"/>
         </fieldset>
     </form>
-
 </div>
 </div>
 </body>
 </html>
 
-
-
-
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<html>--%>
-
-
-<%--<head>--%>
-    <%--<title>Delete</title>--%>
-<%--</head>--%>
-
-<%--<jsp:include page="../../elements/menu.jsp"/>--%>
-
-<%--<p>Are you sure, that you want to delete your this room?</p>--%>
-<%--<body>--%>
-<%--<form method="post" action="/admin/room/delete">--%>
-    <%--<input type="radio" name="delete" value="yes" id = "yes"> Yes, delete room.<br>--%>
-    <%--<input type="radio" name="delete" value="no" id = "no" checked> No. <br>--%>
-
-    <%--<fieldset>--%>
-        <%--<input type="submit" value="Submit"/>--%>
-    <%--</fieldset>--%>
-<%--</form>--%>
-
-<%--</body>--%>
-
-
-<%--</html>--%>

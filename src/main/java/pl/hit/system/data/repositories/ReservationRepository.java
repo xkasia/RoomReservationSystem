@@ -18,16 +18,18 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Modifying
     @Query(nativeQuery = true, value =
-            "insert into reservations (user_id, room_id, reservation_start, reservation_end) values " +
-                    "(?1, ?2, ?3, ?4)")
-    void addReservation(Long userId, Long roomId, LocalDateTime starTime,LocalDateTime endTime);
-
+            "insert into reservations (user_id, room_id, reservation_start, " +
+                    "reservation_end) values (?1, ?2, ?3, ?4)")
+    void addReservation(Long userId, Long roomId, LocalDateTime starTime,
+                        LocalDateTime endTime);
 
 
     @Modifying
     @Query(nativeQuery = true, value =
-            "SELECT reservation_start from reservations where reservation_start > ?1 and room_id = ?2")
-    List<LocalDateTime> giveStartTimesGreaterThanWantedToBook(LocalDateTime startTime, Long roomId);
+            "SELECT reservation_start from reservations where " +
+                    "reservation_start > ?1 and room_id = ?2")
+    List<LocalDateTime> giveStartTimesGreaterThanWantedToBook(LocalDateTime startTime,
+                                                              Long roomId);
 
 
     @Query(nativeQuery = true, value =

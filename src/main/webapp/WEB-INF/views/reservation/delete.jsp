@@ -20,8 +20,10 @@
         <div>
             <p>Are you sure, that you want to delete your this reservation?</p>
             <div class="input-field s6">
-                <select class="browser-default waves-effect waves-light btn" required="required" name="delete" id="delete">=
-                    <option value="" disabled="" selected="">Choose option</option>
+                <select class="browser-default waves-effect waves-light btn"
+                        required="required" name="delete" id="delete">=
+                    <option value="" disabled="" selected="">Choose option
+                    </option>
                     <option value="yes">Yes, delete reservation.</option>
                     <option value="no">No.</option>
                 </select>
@@ -31,7 +33,6 @@
             <input type="submit" value="Submit"/>
         </fieldset>
     </form>
-
 </div>
 </div>
 </body>

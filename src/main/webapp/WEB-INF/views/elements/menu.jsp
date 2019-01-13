@@ -20,8 +20,8 @@
             <li><a href="/admin/room/show">Show Rooms</a></li>
         </ul>
         <ul class="right">
-            <li><a href="/home/login">Zaloguj</a></li>
-            <li><a href="/home/logout">Wyloguj</a></li>
+            <li><a href="/home/login">Login</a></li>
+            <li><a href="/home/logout">Logout</a></li>
             <li><a href="/home/register">Register</a></li>
         </ul>
     </div>

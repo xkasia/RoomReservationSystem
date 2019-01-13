@@ -38,5 +38,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
                     "values(?1, ?2, ?3, ?4, ?5 )")
     void saveRoomInDb(String name, String location, Integer numberOfSeats, Boolean projector, String phoneNumber);
 
+
+
+    @Query(nativeQuery = true, value =
+            "SELECT * from rooms where id = ?1")
     Room getRoomById(Long roomId);
 }

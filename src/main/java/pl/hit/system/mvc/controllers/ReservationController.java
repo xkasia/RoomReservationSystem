@@ -3,10 +3,7 @@ package pl.hit.system.mvc.controllers;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.hit.system.core.services.ReservationService;
 import pl.hit.system.core.services.RoomsService;
 import pl.hit.system.core.services.UserService;
@@ -24,6 +21,7 @@ public class ReservationController {
     private UserService userService;
     private RoomsService roomsService;
     private ReservationService reservationService;
+    Long reservationId;
 
     public ReservationController(UserService userService, RoomsService roomsService, ReservationService reservationService) {
         this.userService = userService;
@@ -46,9 +44,9 @@ public class ReservationController {
 
         RoomDTO roomDTO = roomsService.getRoomByName(roomName);
 
-//        Boolean isAvilable = reservationService.checkIfDateAvailable(roomDTO.getId(), starTime, endTime);
-//
-//        if(isAvilable){
+        Boolean isAvilable = reservationService.checkIfDateAvailable(roomDTO.getId(), LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
+
+        if(isAvilable){
             LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
 
         System.out.println("DAADFAGAGAGAGGAAG START TIME: " + startTime);
@@ -58,21 +56,32 @@ public class ReservationController {
                     LocalDateTime.parse(startTime),
                     LocalDateTime.parse(endTime));
 
-//        }
-        return "reservation/make";
+        }
+        return "redirect:/user/show/reservations";
     }
+
 
     @GetMapping("show/all")
     public String showPagePresentBookingScheduleForAllRooms(Model model){
         List<ReservationDTO> reservationDTO = reservationService.getAllReservations();
-        model.addAttribute("reservation",reservationDTO);
+
+        model.addAttribute("reservations",reservationDTO);
         return "reservation/all";
     }
 
-    @PostMapping("show/all")
-    public void showBookingScheduleForAllRooms(){
+    @GetMapping("delete/{id:[0-9]+}")
+    public String deleteReservation(@PathVariable Long id) {
+        reservationId = id;
+        return "/reservation/delete";
+    }
 
-
+    @PostMapping("delete")
+    public String deleteReservation(String delete){
+        if(delete.equals("yes")) {
+            ReservationDTO reservationDTO = reservationService.getReservation(reservationId);
+            reservationService.deleteReservation(reservationDTO);
+        }
+        return "redirect:/reservation/show/all";
     }
 
 

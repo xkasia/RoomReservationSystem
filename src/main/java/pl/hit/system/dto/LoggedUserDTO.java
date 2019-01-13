@@ -1,14 +1,26 @@
 package pl.hit.system.dto;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class LoggedUserDTO {
 
-
+    @NotNull
     private Long id;
+
+    @NotEmpty(message = "{firstName.notEmpty}") @Length(max=50, message = "{firstName.length}")
     private String firstName;
+
+    @NotEmpty(message = "{lastName.notEmpty}") @Length(max=100, message = "{lastName.length}")
     private String lastName;
+
+    @NotEmpty(message = "{password.notEmpty}") @Length(min=6, max=100, message = "{password.length}")
     private String password;
+
+    @NotEmpty(message = "{login.notEmpty}") @Length(max=100, message = "{login.length}")
     private String login;
 
     public LoggedUserDTO() {

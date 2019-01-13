@@ -18,4 +18,4 @@ INSERT INTO rooms (name, location, number_of_seats, phone_number)VALUES('nasfs',
 --
 -- insert into user_rooms(user_id, room_id) values (1,1);
 
-insert into reservation (user_id, room_id, reservation_start, reservation_end) values (1,1,GETDATE(), GETDATE());
+insert into reservations (user_id, room_id, reservation_start, reservation_end) values (1,1,GETDATE(), GETDATE());

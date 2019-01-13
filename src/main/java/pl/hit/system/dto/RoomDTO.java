@@ -1,17 +1,29 @@
 package pl.hit.system.dto;
 
+import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class RoomDTO {
 
     private Long id;
+
+    @NotEmpty(message = "{name.notEmpty")  @Length(max=50, message = "{name.lenght}")
     private String name;
+
+    @Length(max=258, message = "{location.length}")
     private String location;
+
+    @NotEmpty(message = "{numberOfSeats.notEmpty}")
+    @Max(value = 100, message = ("numberOfSeats.max"))
     private Integer numberOfSeats;
+
     private Boolean projector;
+
+    @Length(max=100, message = "{phoneNumber.length}")
     private String phoneNumber;
-    private Boolean available;
-    private String owner;
 
 
     public RoomDTO() {
@@ -26,13 +38,6 @@ public class RoomDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
 
     public Long getId() {
         return id;
@@ -82,14 +87,6 @@ public class RoomDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,17 +101,5 @@ public class RoomDTO {
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "RoomDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", projector=" + projector +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", available=" + available +
-                ", owner=" + owner +
-                '}';
-    }
+
 }

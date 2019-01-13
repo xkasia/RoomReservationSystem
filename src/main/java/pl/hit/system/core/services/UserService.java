@@ -63,11 +63,11 @@ public class UserService {
 
     }
 
-    public void updateUser(LoggedUserDTO loggedUser, String firstName, String lastName, String login, String password){
+    public void updateUser(LoggedUserDTO loggedUser, String firstName, String lastName, String password){
 
         User user = userRepository.getUserByLogin(loggedUser.getLogin());
 
-        userRepository.updateUser(user.getLogin(), firstName, lastName, login, password);
+        userRepository.updateUser(user.getLogin(), firstName, lastName, password);
     }
 
     public void deleteUser(LoggedUserDTO loggedUser) {

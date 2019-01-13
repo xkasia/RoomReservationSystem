@@ -1,6 +1,6 @@
 package pl.hit.system.data.model;
 
-import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +22,7 @@ public class User {
     private String lastName;
 
 
-    @Column(nullable = false, columnDefinition="VARCHAR")
-    @Length(min=6, max=100)
+    @Column(nullable = false, columnDefinition="VARCHAR", length = 100)
     private String password;
 
     @Column(unique = true, nullable = false, length=100, columnDefinition="VARCHAR")

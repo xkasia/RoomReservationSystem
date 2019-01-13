@@ -37,18 +37,17 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(String firstName, String lastName, String password, String login, HttpSession session,
-                         Model model) throws IOException {
+    public String update(String firstName, String lastName, String password, HttpSession session
+                         ) throws IOException {
         LoggedUserDTO loggedUser = (LoggedUserDTO) session.getAttribute("user");
 
-        userService.updateUser(loggedUser, firstName, lastName, login, password);
+        userService.updateUser(loggedUser, firstName, lastName, password);
 
-        LoggedUserDTO updatedUser = userService.getUser(login, password);
+        LoggedUserDTO updatedUser = userService.getUser(loggedUser.getLogin(), password);
 
-        session.removeAttribute("user");
+        System.out.println("Updated user name" + updatedUser.getFirstName() );
+
         session.setAttribute("user", updatedUser);
-
-        model.addAttribute("user", updatedUser);
 
         return "redirect:/user/data";
     }

@@ -83,11 +83,6 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @GetMapping("contact")
-    public String contact(){
-        return "/contact";
-    }
-
     @GetMapping("about")
     public String about(){
         return "/about";

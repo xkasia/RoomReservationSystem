@@ -104,7 +104,6 @@ public class RoomsService {
     public RoomDTO getRoomById(Long roomId) {
 
         RoomDTO roomDTO = null;
-
         Room room = roomRepository.getRoomById(roomId);
 
         if(room!=null){

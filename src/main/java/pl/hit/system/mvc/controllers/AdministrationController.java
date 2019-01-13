@@ -28,11 +28,11 @@ public class AdministrationController {
         this.roomsService = roomsService;
     }
 
-    @GetMapping
-    public String prepareAdminPanel(Model model, LoggedUserDTO user){
-        model.addAttribute("user", user);
-        return "admin";
-    }
+//    @GetMapping
+//    public String prepareAdminPanel(Model model, LoggedUserDTO user){
+//        model.addAttribute("user", user);
+//        return "admin";
+//    }
 
 
     @GetMapping("user/show")
@@ -50,10 +50,10 @@ public class AdministrationController {
     }
 
     @PostMapping("/user/update")
-    public String updateUser(String firstName, String lastName, String password, String login){
+    public String updateUser(String firstName, String lastName, String password){
         LoggedUserDTO userDTO = userService.getUserByLogin(userLogin);
 
-        userService.updateUser(userDTO, firstName, lastName, login, password);
+        userService.updateUser(userDTO, firstName, lastName, password);
 
        return  "redirect:/admin/user/show";
     }
@@ -162,9 +162,21 @@ public class AdministrationController {
         roomDTO.setName(name);
         roomDTO.setLocation(location);
         roomDTO.setNumberOfSeats(numberOfSeats);
-        if(projector.equals("yes")) {
-            roomDTO.setProjector(true);
-        }
+
+//        if(projector!=null){
+//
+//        else{
+//            roomDTO.setProjector(false);
+//        }
+
+            if(projector.equals("yes"))
+            {
+                roomDTO.setProjector(true);
+            }
+            else {
+                roomDTO.setProjector(false);
+            }
+
         roomDTO.setPhoneNumber(phoneNumber);
 
        roomsService.saveRoom(roomDTO);

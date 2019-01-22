@@ -13,7 +13,6 @@ import pl.hit.system.data.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-
     @Query(nativeQuery = true, value =
             "SELECT CASE WHEN count(*) = 1  THEN 'true' ELSE 'false' END " +
                     "from users where login = ?1 and  password = ?2")
@@ -33,7 +32,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                     "values(?1, ?2, ?3, ?4 )")
     void saveUserInDB(String firstName, String lastName, String login,
                       String password);
-
 
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE users SET first_name=?2,last_name= ?3, " +

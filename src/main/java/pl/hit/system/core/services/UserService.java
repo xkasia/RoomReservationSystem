@@ -8,6 +8,7 @@ import pl.hit.system.data.repositories.ReservationRepository;
 import pl.hit.system.data.repositories.UserRepository;
 import pl.hit.system.dto.LoggedUserDTO;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,6 @@ public class UserService {
         return loggedUserDTO;
     }
 
-
     public boolean checkIfUserExists(String login) {
 
         boolean checkIfEmailExists = userRepository.checkIfEmailExist(login);
@@ -68,16 +68,16 @@ public class UserService {
                            String lastName, String password) {
 
         User user = userRepository.getUserByLogin(loggedUser.getLogin());
-        // TODO: to change with query where key is argument
-        //        int i=0;
-//        String[] values = {firstName, lastName, password};
-//        String[] keys = {"firstName", "lastName", "password"};
-//        for (String key:keys) {
-//            if (values[i] != null){
-//                userRepository.updateUser(user.getLogin(), key, values[i]);
-//            }
-//            i++;
-//        }
+
+        if(firstName.length()==0){
+            firstName = user.getFirstName();
+        }
+        if(lastName.length()==0){
+            lastName = user.getLastName();
+        }
+        if(password.length()==0){
+            password = user.getPassword();
+        }
         userRepository.updateUser(user.getLogin(), firstName, lastName, password);
     }
 

@@ -1,14 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Katarzyna
-  Date: 10.01.2019
-  Time: 10:25
-  To change this template use File | Settings | File Templates.
---%>
 
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Update data</title>
@@ -17,21 +10,18 @@
 <body>
 <jsp:include page="../elements/menu.jsp"/>
 <div class="container">
-    <div class="row center"><h4>Please fill in this form to create an
+    <div class="row center"><h4>Please fill in this form in order to update your data.
         account.</h4>
-        <p>Please give new data</p>
-        <title>Register form</title>
-        <form method="post" action="/user/update">
-            Name <input name="firstName" , type="text" ,
-                        maxlength="50">  </br>  </br>
-            Last Name <input name="lastName" , type="text" ,
-                             maxlength="100"> </br>  </br>
-            Password <input name="password" , type="password" , minlength="6" ,
-                            maxlength="100"> </br>  </br>
-            <fieldset>
-                <input type="submit" value="Update"/>
-            </fieldset>
-        </form>
+        <title>Uptade form</title>
+
+        <f:form modelAttribute="updatedUser" method="post" action="/user/update">
+            <p>Current first name: ${user.firstName}: <f:input path="firstName" type="text"/>
+                <f:errors path="firstName"/> </p>
+            <p>Current last name: ${user.lastName}: <f:input path="lastName" type="text" />
+                <f:errors path="lastName"/> </p>
+            <p>Current password: ${user.password}: <f:input path="password" type="password"/>
+                <f:errors path="password"/> </p>
+            <p><input type="submit" value="Update"/></p> </f:form>
     </div>
 </div>
 </body>

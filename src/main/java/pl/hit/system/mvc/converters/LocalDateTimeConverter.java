@@ -1,39 +1,23 @@
 package pl.hit.system.mvc.converters;
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
-@Component
-@ReadingConverter
-public class LocalDateTimeConverter implements Converter<String, LocalDateTime>,
-        AttributeConverter<LocalDateTime, Timestamp> {
-
+@Converter(autoApply = true)
+public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
     @Override
-    public LocalDateTime convert(String s) {
-        if (s == null) {
-            return null;
-        }
-        System.out.println("Tekst do sparsowania na datę: " + s);
-
-        LocalDateTime dateTime = LocalDateTime.parse(s);
-        return dateTime;
+    public Timestamp convertToDatabaseColumn(LocalDateTime localDateTime) {
+        return Optional.ofNullable(localDateTime)
+                .map(Timestamp::valueOf)
+                .orElse(null);
     }
-
     @Override
-    public Timestamp convertToDatabaseColumn(LocalDateTime ldt) {
-        return Timestamp.valueOf(ldt);
-    }
-
-    @Override
-    public LocalDateTime convertToEntityAttribute(Timestamp ts) {
-        if (ts != null) {
-            return ts.toLocalDateTime();
-        }
-        return null;
+    public LocalDateTime convertToEntityAttribute(Timestamp timestamp) {
+        return Optional.ofNullable(timestamp)
+                .map(Timestamp::toLocalDateTime)
+                .orElse(null);
     }
 }

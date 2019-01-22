@@ -13,7 +13,7 @@ import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.ReservationDTO;
 import pl.hit.system.dto.RoomDTO;
 
-import java.time.Duration;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,24 +31,29 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
-
     }
 
 
     public boolean checkIfDateAvailable(Long roomId, LocalDateTime startTime,
                                         LocalDateTime endTime) {
+        List<Timestamp> startTimesFromDB =
+                reservationRepository.giveStartTimesDuringPeriodToBook(startTime, endTime, roomId);
 
-        List<LocalDateTime> startTimes =
-                reservationRepository.giveStartTimesGreaterThanWantedToBook(startTime, roomId);
+        if(startTimesFromDB.size()!=0){
+            return false;
+        }
 
-        if (startTimes != null) {
-            Duration reservationDuration = Duration.between(startTime, endTime);
+        List<Timestamp> endTimesFromDB =
+                reservationRepository.giveEndTimesDuringPeriodToBook(startTime, endTime, roomId);
 
-            for (int i = 0; i < startTimes.size(); i++) ;
-//                if (reservationDuration.compareTo(durationFromDatabase) == 1) {
-//                    System.out.println("MILOSC");
-//                    return false;
-//                }
+        if(endTimesFromDB.size()!=0){ ;
+            return false;
+        }
+
+        List<Timestamp> timesFromDB = reservationRepository.giveTimesSmallerThanStartTimeAndBiggerThanEndTimeToBook(startTime,endTime,roomId);
+
+        if(timesFromDB.size()!=0){
+            return false;
         }
         return true;
     }
@@ -99,7 +104,7 @@ public class ReservationService {
                     reservationDTO.setRoom(reservation.getRoom());
                     reservationDTO.setUser(reservation.getUser());
                     reservationDTO.setReservationStart(reservation.getReservationStart());
-                    reservation.setReservationEnd(reservation.getReservationEnd());
+                    reservationDTO.setReservationEnd(reservation.getReservationEnd());
                     return reservationDTO;
                 }).collect(Collectors.toList());
 
@@ -120,5 +125,108 @@ public class ReservationService {
     public void deleteReservation(ReservationDTO reservationDTO) {
         Reservation reservation = reservationRepository.getReservationById(reservationDTO.getId());
         reservationRepository.delete(reservation);
+    }
+
+    public List<ReservationDTO> getReservationSInChoosedTime(String startTime, String endTime) {
+        List<Reservation> reservations = null;
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+            reservations = reservationRepository.getReservationsInTimeFrame
+                    (LocalDateTime.parse(startTime),LocalDateTime.parse(endTime));
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            reservations = reservationRepository.getReservationsFromDate(LocalDateTime.parse(startTime));
+
+        }
+        else if(startTime.length()==0 && endTime.length()!=0){
+            reservations = reservationRepository.getReservationsToDate(LocalDateTime.parse(endTime));
+        }
+        else return null;
+
+        List<ReservationDTO> reservationsDTO = reservations
+                .stream()
+                .filter(reservation -> reservation != null)
+                .map(reservation ->
+                {
+                    ReservationDTO reservationDTO = new ReservationDTO();
+                    reservationDTO.setId(reservation.getId());
+                    reservationDTO.setRoom(reservation.getRoom());
+                    reservationDTO.setUser(reservation.getUser());
+                    reservationDTO.setReservationStart(reservation.getReservationStart());
+                    reservationDTO.setReservationEnd(reservation.getReservationEnd());
+                    return reservationDTO;
+                }).collect(Collectors.toList());
+
+        return reservationsDTO;
+
+    }
+
+    public List<ReservationDTO> getUserReservationSInChoosedTimeFrame(LoggedUserDTO userDTO, String startTime, String endTime) {
+        List<Reservation> reservations = null;
+        User user = userRepository.getUserByLogin(userDTO.getLogin());
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+            reservations = reservationRepository.getUserReservationsInTimeFrame
+                    (LocalDateTime.parse(startTime),LocalDateTime.parse(endTime), user.getId());
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            reservations = reservationRepository.getUserReservationsFromDate(LocalDateTime.parse(startTime), user.getId());
+
+        }
+        else if(startTime.length()==0 && endTime.length()!=0){
+            reservations = reservationRepository.getUserReservationsToDate(LocalDateTime.parse(endTime), user.getId());
+        }
+        else return null;
+
+        List<ReservationDTO> reservationsDTO = reservations
+                .stream()
+                .filter(reservation -> reservation != null)
+                .map(reservation ->
+                {
+                    ReservationDTO reservationDTO = new ReservationDTO();
+                    reservationDTO.setId(reservation.getId());
+                    reservationDTO.setRoom(reservation.getRoom());
+                    reservationDTO.setUser(reservation.getUser());
+                    reservationDTO.setReservationStart(reservation.getReservationStart());
+                    reservationDTO.setReservationEnd(reservation.getReservationEnd());
+                    return reservationDTO;
+                }).collect(Collectors.toList());
+
+        return reservationsDTO;
+
+    }
+
+    public List<ReservationDTO> getReservationsInChoosedTimeForRoom(String startTime, String endTime, RoomDTO roomDTO) {
+        List<Reservation> reservations = null;
+        Room room = roomRepository.getRoomByName(roomDTO.getName());
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+            reservations = reservationRepository.getRoomReservationsInTimeFrame
+                    (LocalDateTime.parse(startTime),LocalDateTime.parse(endTime), room.getId());
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            reservations = reservationRepository.getRoomReservationsFromDate(LocalDateTime.parse(startTime), room.getId());
+
+        }
+        else if(startTime.length()==0 && endTime.length()!=0){
+            reservations = reservationRepository.getRoomReservationsToDate(LocalDateTime.parse(endTime), room.getId());
+        }
+        else return null;
+
+        List<ReservationDTO> reservationsDTO = reservations
+                .stream()
+                .filter(reservation -> reservation != null)
+                .map(reservation ->
+                {
+                    ReservationDTO reservationDTO = new ReservationDTO();
+                    reservationDTO.setId(reservation.getId());
+                    reservationDTO.setRoom(reservation.getRoom());
+                    reservationDTO.setUser(reservation.getUser());
+                    reservationDTO.setReservationStart(reservation.getReservationStart());
+                    reservationDTO.setReservationEnd(reservation.getReservationEnd());
+                    return reservationDTO;
+                }).collect(Collectors.toList());
+
+        return reservationsDTO;
     }
 }

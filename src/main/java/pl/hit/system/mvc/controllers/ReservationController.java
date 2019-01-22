@@ -20,7 +20,8 @@ public class ReservationController {
     private UserService userService;
     private RoomsService roomsService;
     private ReservationService reservationService;
-    Long reservationId;
+    private Long reservationId;
+    private List<ReservationDTO> reservationsDTOInTimeFrame;
 
     public ReservationController(UserService userService,
                                  RoomsService roomsService,
@@ -41,7 +42,7 @@ public class ReservationController {
     public String reserveRoom(HttpSession session,
                               @RequestParam(name = "name") String roomName,
                               String startTime,
-                              String endTime) {
+                              String endTime, Model model) {
 
         RoomDTO roomDTO = roomsService.getRoomByName(roomName);
 
@@ -50,23 +51,37 @@ public class ReservationController {
 
         if (isAvilable) {
             LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
-
-            System.out.println("DAADFAGAGAGAGGAAG START TIME: " + startTime);
-            System.out.println("AGAGAGAGA END TIME: " + endTime);
             reservationService.addReservation(userDTO,
                     roomDTO,
                     LocalDateTime.parse(startTime),
                     LocalDateTime.parse(endTime));
+
+            List<ReservationDTO> reservationDTO = reservationService.getUserReservations(userDTO);
+            model.addAttribute("reservations", reservationDTO);
+
+            model.addAttribute("bookingSuccessMsq", "Your reservation was made successfully.");
+            return "/user/reservation/all";
         }
-        return "redirect:/user/show/reservations";
+
+        List<RoomDTO> roomsDTO = roomsService.getAllRooms();
+        model.addAttribute("room", roomsDTO);
+        model.addAttribute("bookingErrorMsq", "Choosed room is already booked in selected time. Please try again.");
+        return "reservation/make";
     }
 
 
     @GetMapping("show/all")
-    public String showPagePresentBookingScheduleForAllRooms(Model model) {
+    public String showPageWithScheduleForRooms(Model model) {
         List<ReservationDTO> reservationDTO = reservationService.getAllReservations();
-
         model.addAttribute("reservations", reservationDTO);
+        return "reservation/all";
+    }
+
+    @PostMapping("show/all")
+    public String showReservationsInTimeFrame(String startTime, String endTime, Model model) {
+        reservationsDTOInTimeFrame =
+                reservationService.getReservationSInChoosedTime(startTime, endTime);
+        model.addAttribute("reservations", reservationsDTOInTimeFrame);
         return "reservation/all";
     }
 
@@ -74,6 +89,32 @@ public class ReservationController {
     public String deleteReservation(@PathVariable Long id) {
         reservationId = id;
         return "/reservation/delete";
+    }
+
+    @GetMapping("show/room")
+    public String showPageWithScheduleForRoom(Model model) {
+        List<RoomDTO> roomDTO = roomsService.getAllRooms();
+        model.addAttribute("room", roomDTO);
+
+        List<ReservationDTO> reservationDTO = reservationService.getAllReservations();
+        model.addAttribute("reservations", reservationDTO);
+        return "reservation/room";
+    }
+
+    @PostMapping("show/room")
+    public String showReservationsForRoom(@RequestParam(name = "name") String roomName, String startTime,
+                                          String endTime, Model model) {
+
+        RoomDTO roomDTO = roomsService.getRoomByName(roomName);
+
+        reservationsDTOInTimeFrame =
+                reservationService.getReservationsInChoosedTimeForRoom(startTime, endTime, roomDTO);
+        model.addAttribute("reservations", reservationsDTOInTimeFrame);
+
+        List<RoomDTO> roomDTOList = roomsService.getAllRooms();
+        model.addAttribute("room", roomDTOList);
+
+        return  "reservation/room";
     }
 
     @PostMapping("delete")

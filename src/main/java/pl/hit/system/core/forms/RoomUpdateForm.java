@@ -1,22 +1,16 @@
-package pl.hit.system.dto;
+package pl.hit.system.core.forms;
 
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
-import java.util.Objects;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
-public class RoomDTO {
-
-    private Long id;
-
-    @NotEmpty(message = "{name.notEmpty}")
-    @Length(max = 50, message = "{name.lenght}")
-    private String name;
+public class RoomUpdateForm {
 
     @Length(max = 258, message = "{location.length}")
     private String location;
 
-    @NotNull(message = "{numberOfSeats.notNull}")
     @Max(value = 100, message = ("{numberOfSeats.max}"))
     @Min(value = 0, message = ("{numberOfSeats.min}"))
     private Integer numberOfSeats;
@@ -27,34 +21,7 @@ public class RoomDTO {
     @Length(max = 100, message = "{phoneNumber.length}")
     private String phoneNumber;
 
-
-    public RoomDTO() {
-    }
-
-    public RoomDTO(Long id, String name, String location, Integer numberOfSeats, Boolean projector, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.numberOfSeats = numberOfSeats;
-        this.projector = projector;
-        this.phoneNumber = phoneNumber;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public RoomUpdateForm() {
     }
 
     public String getLocation() {
@@ -90,25 +57,9 @@ public class RoomDTO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RoomDTO room = (RoomDTO) o;
-        return Objects.equals(id, room.id);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
-        return "RoomDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+        return "RoomUpdateForm{" +
+                "location='" + location + '\'' +
                 ", numberOfSeats=" + numberOfSeats +
                 ", projector=" + projector +
                 ", phoneNumber='" + phoneNumber + '\'' +

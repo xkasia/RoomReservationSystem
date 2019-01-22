@@ -1,6 +1,6 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Login page</title>
@@ -9,17 +9,15 @@
 <body>
 <jsp:include page="elements/menu.jsp"/>
 <div class="container">
-    <div class="row center"><h2>Create account</h2>
-        <form method="post" action="/home/login">
-            Login <input name="login" , type="text" , maxlength="100" ,
-                         required="required"> </br>  </br>
-            Password <input name="password" , type="password" , minlength="6" ,
-                            maxlength="100" , required="required"> </br>  </br>
-            <fieldset>
-                <input type="submit" value="Login"/> <input type="reset"
-                                                            value="Reset"/>
-            </fieldset>
-        </form>
+    <div class="row center"><h2>Login</h2>
+        <f:form modelAttribute="user" method="post" action="/home/login">
+            <p>Login:* <f:input path="login" type="text"/>
+                <f:errors path="login"/> </p>
+            <p>Password:* <f:input path="password" type="password"/>
+                <f:errors path="password"/> </p>
+            <p><input type="submit" value="Submit"/></p> </f:form>
+        </br>
+        <h6 style="color:red;">${errorMsg}</h6>
     </div>
 </div>
 </body>

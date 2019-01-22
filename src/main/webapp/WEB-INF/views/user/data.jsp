@@ -1,8 +1,6 @@
 
-
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 <title>Your data</title>
@@ -15,13 +13,13 @@
 
 <div class="row center"><h2>Your data:</h2>
 
-<div>First name: ${user.firstName}</div>
+First name: ${user.firstName}</br>
 
-<div>Last Name: ${user.lastName}</div>
+Last Name: ${user.lastName}</br>
 
-<div>Login: ${user.login}</div>
+Login: ${user.login}</br>
 
-<div>Password: ${user.password}</div>
+Password: ${user.password}</br>
 
 </br>
 </br>
@@ -29,6 +27,8 @@
 <a href="update">Update your Data.</a> </br>
 
 <a href="delete">Delete account.</a>
+
+    <h6 style="color:red;">${updateUserMsg}</h6>
 </div>
 
 </div>

@@ -25,6 +25,7 @@ public class UserReservationController {
     private ReservationService reservationService;
 
     private Long reservationId;
+    private List<ReservationDTO> reservationsDTOInTimeFrame;
 
     public UserReservationController(UserService userService,
                                      RoomsService roomsService,
@@ -35,17 +36,21 @@ public class UserReservationController {
     }
 
     @GetMapping("show/reservations")
-    public String showPagePresentBookingScheduleForAllRooms(Model model,
-                                                            HttpSession session) {
-
+    public String showPageWithBookedRooms(Model model, HttpSession session) {
         LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
-
         List<ReservationDTO> reservationDTO = reservationService.getUserReservations(userDTO);
-
         model.addAttribute("reservations", reservationDTO);
         return "/user/reservation/all";
     }
 
+    @PostMapping("show/reservations")
+    public String showReservations(String startTime, String endTime, Model model, HttpSession session) {
+        LoggedUserDTO userDTO = (LoggedUserDTO)session.getAttribute("user");
+        reservationsDTOInTimeFrame =
+                reservationService.getUserReservationSInChoosedTimeFrame(userDTO, startTime, endTime);
+        model.addAttribute("reservations", reservationsDTOInTimeFrame);
+        return "/user/reservation/all";
+    }
 
     @GetMapping("delete/reservation/{id:[0-9]+}")
     public String deleteReservation(@PathVariable Long id) {
@@ -61,5 +66,4 @@ public class UserReservationController {
         }
         return "redirect:/user/show/reservations";
     }
-
 }

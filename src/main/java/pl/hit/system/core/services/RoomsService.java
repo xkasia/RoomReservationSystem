@@ -1,6 +1,7 @@
 package pl.hit.system.core.services;
 
 
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.hit.system.data.model.Reservation;
@@ -55,11 +56,31 @@ public class RoomsService {
         return roomDTO;
     }
 
-    public void updateRoom(RoomDTO roomDTO, String name, String location, Integer numberOfSeats, String projector, String phoneNumber) {
+    public void updateRoom(RoomDTO roomDTO,String location, Integer numberOfSeats, Boolean projector, String phoneNumber) {
 
         Room room = roomRepository.getRoomByName(roomDTO.getName());
 
-        roomRepository.updateRoom(room.getId(), name, location, numberOfSeats, projector, phoneNumber);
+        System.out.println("INTEGER NULL");
+        System.out.println(numberOfSeats== null);
+
+        System.out.println("PROJECTOR NULL");
+        System.out.println(projector == null);
+
+
+        if(location.length()==0){
+            location = room.getLocation();
+        }
+        if(phoneNumber.length()==0){
+            phoneNumber = room.getPhoneNumber();
+        }
+        if(numberOfSeats == null){
+            numberOfSeats = room.getNumberOfSeats();
+        }
+        if(projector == null){
+            projector = room.getProjector();
+        }
+
+        roomRepository.updateRoom(room.getId(), location, numberOfSeats, projector, phoneNumber);
 
     }
 
@@ -97,9 +118,7 @@ public class RoomsService {
 
         roomRepository.saveRoomInDb(room.getName(), room.getLocation(), room.getNumberOfSeats(),
                 room.getProjector(), room.getPhoneNumber());
-
     }
-
 
     public RoomDTO getRoomById(Long roomId) {
 

@@ -1,13 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Katarzyna
-  Date: 10.01.2019
-  Time: 07:34
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Login page</title>
@@ -20,19 +16,19 @@
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
         <title>Register form</title>
-        <form method="post" action="/home/register">
-            Name <input name="firstName" , type="text" , maxlength="50" ,
-                        required="required">  </br>  </br>
-            Last Name <input name="lastName" , type="text" , maxlength="100" ,
-                             required="required"> </br>  </br>
-            Password <input name="password" , type="password" , minlength="6" ,
-                            maxlength="100" , required="required"> </br>  </br>
-            login <input name="login" , type="text" , maxlength="100" ,
-                         required="required"> </br>  </br>
-            <fieldset>
-                <input type="submit" value="Register"/>
-            </fieldset>
-        </form>
+
+        <f:form modelAttribute="user" method="post" action="/home/register">
+            <p>First name:*<f:input path="firstName" type="text"/>
+                <f:errors path="firstName"/> </p>
+            <p>Last name:*<f:input path="lastName" type="text"/>
+                <f:errors path="lastName"/> </p>
+            <p>Password:* <f:input path="password" type="password"/>
+                <f:errors path="password"/> </p>
+            <p>Login:* <f:input path="login" type="text"/>
+                <f:errors path="login"/> </p>
+            <p><input type="submit" value="Submit"/></p> </f:form>
+        </br>
+        <h6 style="color:red;">${errorMsg}</h6>
     </div>
 </div>
 </body>

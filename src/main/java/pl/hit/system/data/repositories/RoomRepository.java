@@ -17,16 +17,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Room getRoomByName(String roomName);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE rooms SET name=?2,location= ?3, " +
-            "number_of_seats = ?4, projector = ?5,  phone_number= ?6 WHERE id = ?1")
-    void updateRoom(Long id, String name, String location, Integer numberOfSeats,
-                    String projector, String phoneNumber);
-
+    @Query(nativeQuery = true, value = "UPDATE rooms SET location= ?2, " +
+            "number_of_seats = ?3, projector = ?4,  phone_number= ?5 WHERE id = ?1")
+    void updateRoom(Long id, String location, Integer numberOfSeats,
+                    Boolean projector, String phoneNumber);
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM rooms WHERE id = ?1")
     void deleteRoom(Long id);
-
 
     @Query(nativeQuery = true, value =
             "SELECT CASE WHEN count(*) = 1  THEN 'true' ELSE 'false' END " +
@@ -39,7 +37,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
                     "values(?1, ?2, ?3, ?4, ?5 )")
     void saveRoomInDb(String name, String location, Integer numberOfSeats,
                       Boolean projector, String phoneNumber);
-
 
     @Query(nativeQuery = true, value =
             "SELECT * from rooms where id = ?1")

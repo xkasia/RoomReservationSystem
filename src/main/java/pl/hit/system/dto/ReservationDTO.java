@@ -68,4 +68,15 @@ public class ReservationDTO {
     public void setReservationEnd(LocalDateTime reservationEnd) {
         this.reservationEnd = reservationEnd;
     }
+
+    @Override
+    public String toString() {
+        return "ReservationDTO{" +
+                "id=" + id +
+                ", room=" + room +
+                ", user=" + user +
+                ", reservationStart=" + reservationStart +
+                ", reservationEnd=" + reservationEnd +
+                '}';
+    }
 }

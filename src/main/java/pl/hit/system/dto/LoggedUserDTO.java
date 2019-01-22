@@ -1,6 +1,7 @@
 package pl.hit.system.dto;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,6 @@ import java.util.Objects;
 
 public class LoggedUserDTO {
 
-    @NotNull
     private Long id;
 
     @NotEmpty(message = "{firstName.notEmpty}")

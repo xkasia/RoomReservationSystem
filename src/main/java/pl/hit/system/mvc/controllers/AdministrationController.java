@@ -3,13 +3,18 @@ package pl.hit.system.mvc.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.hit.system.core.forms.RoomUpdateForm;
+import pl.hit.system.core.forms.UserUpdateForm;
 import pl.hit.system.core.services.RoomsService;
 import pl.hit.system.core.services.UserService;
+import pl.hit.system.data.model.Room;
 import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.RoomDTO;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,23 +37,36 @@ public class AdministrationController {
     public String showUsers(Model model) {
         List<LoggedUserDTO> users = userService.getAllUsers();
         model.addAttribute("user", users);
-
         return "/admin/user/show";
     }
 
     @GetMapping("/user/update/{login:[A-Za-z0-9_.]+}")
-    public String showUpdatePage(@PathVariable String login) {
+    public String showUpdatePage(@PathVariable String login, Model model) {
         userLogin = login;
+        LoggedUserDTO userDTO = userService.getUserByLogin(userLogin);
+        model.addAttribute("user", userDTO);
+        model.addAttribute("updatedUser", new UserUpdateForm());
         return "admin/user/update";
     }
 
     @PostMapping("/user/update")
-    public String updateUser(String firstName, String lastName, String password) {
+    public String updateUser(@Valid @ModelAttribute("updatedUser") UserUpdateForm userUpdateForm,
+                             BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            return "admin/user/update";
+        }
+
         LoggedUserDTO userDTO = userService.getUserByLogin(userLogin);
 
-        userService.updateUser(userDTO, firstName, lastName, password);
+        userService.updateUser(userDTO, userUpdateForm.getFirstName(),
+                userUpdateForm.getLastName(), userUpdateForm.getPassword());
 
-        return "redirect:/admin/user/show";
+        model.addAttribute("successMsg", "User was updated successfully.");
+
+        List<LoggedUserDTO> users = userService.getAllUsers();
+        model.addAttribute("user", users);
+
+        return "/admin/user/show";
     }
 
     @GetMapping("user/delete/{login:[A-Za-z0-9_.]+}")
@@ -59,39 +77,55 @@ public class AdministrationController {
 
 
     @PostMapping("user/delete")
-    public String deleteUser(String delete) {
+    public String deleteUser(String delete, Model model) {
 
         if (delete.equals("yes")) {
             LoggedUserDTO userDTO = userService.getUserByLogin(userLogin);
             userService.deleteUser(userDTO);
+
+            model.addAttribute("successMsg", "User was deleted successfully.");
+
+            List<LoggedUserDTO> users = userService.getAllUsers();
+            model.addAttribute("user", users);
+            return "/admin/user/show";
         }
         return "redirect:/admin/user/show";
-
     }
 
     @GetMapping("user/add")
-    public String showAddUserPage() {
+    public String showAddUserPage(Model model) {
+        model.addAttribute("user", new LoggedUserDTO());
         return "/admin/user/add";
     }
 
     @PostMapping("user/add")
-    public void addUser(String firstName, String lastName, String password,
-                        String login, HttpServletResponse response) throws IOException {
-        boolean checkIfUserExists = userService.checkIfUserExists(login);
+    public String addUser(@Valid @ModelAttribute("user") LoggedUserDTO loggedUserDTO,
+                        BindingResult bindingResult, Model model) throws IOException {
+        if(bindingResult.hasErrors()){
+            return "/admin/user/add";
+        }
+
+        boolean checkIfUserExists = userService.checkIfUserExists(loggedUserDTO.getLogin());
 
         if (checkIfUserExists) {
-            response.sendError(401, "Such user exists in our system. Please try again.");
-            return;
+            model.addAttribute("errorMsg", "User in such login exists in our system. " +
+                    "Please try again.");
+            return "/admin/user/add";
         }
 
         LoggedUserDTO loggedUser = new LoggedUserDTO();
-        loggedUser.setFirstName(firstName);
-        loggedUser.setLastName(lastName);
-        loggedUser.setPassword(password);
-        loggedUser.setLogin(login);
+        loggedUser.setFirstName(loggedUserDTO.getFirstName());
+        loggedUser.setLastName(loggedUserDTO.getLastName());
+        loggedUser.setPassword(loggedUserDTO.getPassword());
+        loggedUser.setLogin(loggedUserDTO.getLogin());
         userService.saveUser(loggedUser);
 
-        response.sendRedirect("/admin/user/show");
+        model.addAttribute("successMsg", "User was created successfully.");
+
+        List<LoggedUserDTO> users = userService.getAllUsers();
+        model.addAttribute("user", users);
+
+        return "/admin/user/show";
     }
 
     @GetMapping("room/show")
@@ -103,21 +137,31 @@ public class AdministrationController {
     }
 
     @GetMapping("/room/update/{id:[0-9]+}")
-    public String showUpdatedRoomPage(@PathVariable Long id) {
+    public String showUpdatedRoomPage(@PathVariable Long id, Model model) {
         roomId = id;
+        RoomDTO roomDTO = roomsService.getRoomById(roomId);
+        model.addAttribute("room", roomDTO);
+        model.addAttribute("roomUpdated", new RoomUpdateForm());
         return "admin/room/update";
     }
 
     @PostMapping("/room/update")
-    public String updateRoom(String name, String location, Integer numberOfSeats,
-                             String projector, String phoneNumber) {
+    public String updateRoom(@Valid @ModelAttribute("roomUpdated") RoomUpdateForm room,
+                             BindingResult bindingResult, Model model) {
+
+        if(bindingResult.hasErrors()){
+            return "/admin/room/update";
+        }
 
         RoomDTO roomDTO = roomsService.getRoomById(roomId);
+        roomsService.updateRoom(roomDTO, room.getLocation(), room.getNumberOfSeats(),
+                room.getProjector(), room.getPhoneNumber());
 
-        roomsService.updateRoom(roomDTO, name, location, numberOfSeats,
-                projector, phoneNumber);
+        model.addAttribute("successMsg", "Room was updated successfully.");
+        List<RoomDTO> rooms = roomsService.getAllRooms();
+        model.addAttribute("room", rooms);
 
-        return "redirect:/admin/room/show";
+        return "/admin/room/show";
     }
 
     @GetMapping("room/delete/{id:[0-9]+}")
@@ -128,46 +172,53 @@ public class AdministrationController {
 
 
     @PostMapping("room/delete")
-    public String deleteRoom(String delete) {
+    public String deleteRoom(String delete, Model model) {
 
         if (delete.equals("yes")) {
             RoomDTO roomDTO = roomsService.getRoomById(roomId);
             roomsService.deleteRoom(roomDTO);
+            model.addAttribute("successMsg", "Room was deleted successfully.");
+            List<RoomDTO> rooms = roomsService.getAllRooms();
+            model.addAttribute("room", rooms);
+            return "/admin/room/show";
         }
         return "redirect:/admin/room/show";
     }
 
     @GetMapping("room/add")
-    public String showAddRoomPage() {
+    public String showAddRoomPage(Model model) {
+        model.addAttribute("room", new RoomDTO());
         return "/admin/room/add";
     }
 
     @PostMapping("room/add")
-    public void addRoom(String name, String location, Integer numberOfSeats,
-                        String projector, String phoneNumber,
-                        HttpServletResponse response) throws IOException {
-        boolean checkIfRoomExists = roomsService.checkIfRoomExists(name);
+    public String addRoom(@Valid @ModelAttribute("room") RoomDTO room, BindingResult bindingResult,
+                          Model model) throws IOException {
+
+        if(bindingResult.hasErrors()){
+            return "/admin/room/add";
+        }
+
+        boolean checkIfRoomExists = roomsService.checkIfRoomExists(room.getName());
 
         if (checkIfRoomExists) {
-            response.sendError(401, "Such room exists in our system." +
-                    " Please try again.");
-            return;
+            model.addAttribute("errorMsg", "Room in such name exists in our system. " +
+                    "Please try again.");
+            return "/admin/room/add";
         }
 
         RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setName(name);
-        roomDTO.setLocation(location);
-        roomDTO.setNumberOfSeats(numberOfSeats);
-
-        if (projector.equals("yes")) {
-            roomDTO.setProjector(true);
-        } else {
-            roomDTO.setProjector(false);
-        }
-
-        roomDTO.setPhoneNumber(phoneNumber);
-
+        roomDTO.setName(room.getName());
+        roomDTO.setLocation(room.getLocation());
+        roomDTO.setNumberOfSeats(room.getNumberOfSeats());
+        roomDTO.setPhoneNumber(room.getPhoneNumber());
+        roomDTO.setProjector(room.getProjector());
         roomsService.saveRoom(roomDTO);
-        response.sendRedirect("/admin/room/show");
+
+        model.addAttribute("successMsg", "Room was created successfully.");
+        List<RoomDTO> rooms = roomsService.getAllRooms();
+        model.addAttribute("room", rooms);
+
+        return "/admin/room/show";
     }
 }

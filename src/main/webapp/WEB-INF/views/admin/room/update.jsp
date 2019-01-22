@@ -1,14 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Katarzyna
-  Date: 11.01.2019
-  Time: 13:03
-  To change this template use File | Settings | File Templates.
---%>
+
 
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Update room</title>
@@ -21,30 +16,27 @@
     <div class="row center">
         <h1>Update room.</h1>
         <p>Please give new data.</p>
-        <form method="post" action="/admin/room/update">
 
-            Name <input name="name" , type="text" , maxlength="50" ,
-                        required="required">  </br>  </br>
-            Location <input name="location" , type="text" ,
-                            maxlength="256"> </br>  </br>
-            Number of seats <input name="numberOfSeats" , type="number" ,
-                                   min="0" , max="100"> </br>  </br>
+        <f:form modelAttribute="roomUpdated" method="post" action="/admin/room/update">
+            <p>Location:<f:input path="location" type="text"/>
+                <f:errors path="location"/> </p>
+            <p>Number of seats: <f:input path="numberOfSeats" type="number"/>
+                <f:errors path="numberOfSeats"/> </p>
+
             <p>Does this room have projector?</p>
             <div class="input-field s6">
                 <select class="browser-default waves-effect waves-light btn"
-                        name="projector" id="projector">=
+                        name="projector" id="projector"  <f:input path="projector"/>  <f:errors path="numberOfSeats"/>>
                     <option value="" disabled="" selected="">Choose option
                     </option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
             </div>
-            Phone number <input name="phoneNumber" , type="text" ,
-                                maxlength="100"> </br>  </br>
-            <fieldset>
-                <input type="submit" value="Create"/>
-            </fieldset>
-        </form>
+
+            <p>Phone number: <f:input path="phoneNumber" type="text"/>
+                <f:errors path="phoneNumber"/> </p>
+            <p><input type="submit" value="Update"/></p> </f:form>
     </div>
 </div>
 </body>

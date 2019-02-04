@@ -1,8 +1,11 @@
+
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
-    <title>ALL RESERVATIONS</title>
+    <title>All Reservations</title>
     <jsp:include page="../elements/header.jsp"/>
 </head>
 <body>
@@ -19,8 +22,11 @@
         <fieldset>
             <input type="submit" value="Submit"/>
         </fieldset>
+        <h6 style="color:red;">${wrongDataMsg}</h6>
     </form>
+
     <div class="row center"><h2>All Reservations</h2>
+        ${timeFrame}
         <table>
             <thead>
             <tr>

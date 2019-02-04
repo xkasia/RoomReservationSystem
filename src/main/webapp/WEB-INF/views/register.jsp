@@ -17,7 +17,7 @@
         <p>Please fill in this form to create an account.</p>
         <title>Register form</title>
 
-        <f:form modelAttribute="user" method="post" action="/home/register">
+        <f:form modelAttribute="user" method="post" action="/register">
             <p>First name:*<f:input path="firstName" type="text"/>
                 <f:errors path="firstName"/> </p>
             <p>Last name:*<f:input path="lastName" type="text"/>

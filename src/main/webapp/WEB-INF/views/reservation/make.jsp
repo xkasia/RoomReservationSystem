@@ -31,6 +31,7 @@
             <fieldset>
                 <input type="submit" value="Submit"/>
             </fieldset>
+        <h6 style="color:red;">${wrongDataMsg}</h6>
         </form>
 
     <h6 style="color:red;">${bookingErrorMsq}</h6>

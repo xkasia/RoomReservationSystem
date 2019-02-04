@@ -9,9 +9,10 @@ import pl.hit.system.core.services.UserService;
 import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.ReservationDTO;
 import pl.hit.system.dto.RoomDTO;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -44,12 +45,25 @@ public class ReservationController {
                               String startTime,
                               String endTime, Model model) {
 
+        List<RoomDTO> roomsDTO = roomsService.getAllRooms();
+        model.addAttribute("room", roomsDTO);
+
+        if(LocalDateTime.parse(startTime).compareTo(LocalDateTime.now())<0){
+            model.addAttribute("wrongDataMsg", "Start date can not be before today. Please try again.");
+            return  "reservation/make";
+        }
+
+        if(LocalDateTime.parse(startTime).compareTo(LocalDateTime.parse(endTime))>0){
+            model.addAttribute("wrongDataMsg", "End date can not be before start date. Please try again.");
+            return  "reservation/make";
+        }
+
         RoomDTO roomDTO = roomsService.getRoomByName(roomName);
 
-        Boolean isAvilable = reservationService.checkIfDateAvailable(roomDTO.getId(),
+        Boolean isAvailable = reservationService.checkIfDateAvailable(roomDTO.getId(),
                 LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
 
-        if (isAvilable) {
+        if (isAvailable) {
             LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
             reservationService.addReservation(userDTO,
                     roomDTO,
@@ -63,8 +77,6 @@ public class ReservationController {
             return "/user/reservation/all";
         }
 
-        List<RoomDTO> roomsDTO = roomsService.getAllRooms();
-        model.addAttribute("room", roomsDTO);
         model.addAttribute("bookingErrorMsq", "Choosed room is already booked in selected time. Please try again.");
         return "reservation/make";
     }
@@ -73,14 +85,37 @@ public class ReservationController {
     @GetMapping("show/all")
     public String showPageWithScheduleForRooms(Model model) {
         List<ReservationDTO> reservationDTO = reservationService.getAllReservations();
+
+        for (ReservationDTO reservation: reservationDTO) {
+            reservation.getReservationStart();
+
+        }
+
         model.addAttribute("reservations", reservationDTO);
         return "reservation/all";
     }
 
     @PostMapping("show/all")
     public String showReservationsInTimeFrame(String startTime, String endTime, Model model) {
+
         reservationsDTOInTimeFrame =
                 reservationService.getReservationSInChoosedTime(startTime, endTime);
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+            if(LocalDateTime.parse(startTime).compareTo(LocalDateTime.parse(endTime))>0){
+                List<ReservationDTO> reservationDTO = reservationService.getAllReservations();
+                model.addAttribute("reservations", reservationDTO);
+                model.addAttribute("wrongDataMsg", "End date can not be before start date. Please try again.");
+                return "reservation/all";
+            }
+            model.addAttribute("timeFrame", "From date: " + startTime +". To date: " + endTime +".");
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            model.addAttribute("timeFrame", "From date: " + startTime +".");
+        }
+        else if (startTime.length()==0 && endTime.length()!=0){
+            model.addAttribute("timeFrame", "To date: " + endTime +".");
+        }
         model.addAttribute("reservations", reservationsDTOInTimeFrame);
         return "reservation/all";
     }
@@ -112,6 +147,25 @@ public class ReservationController {
         model.addAttribute("reservations", reservationsDTOInTimeFrame);
 
         List<RoomDTO> roomDTOList = roomsService.getAllRooms();
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+
+            if(LocalDateTime.parse(startTime).compareTo(LocalDateTime.parse(endTime))>0){
+                List<RoomDTO> roomsDTO = roomsService.getAllRooms();
+                model.addAttribute("room", roomsDTO);
+                model.addAttribute("wrongDataMsg", "End date can not be before start date. Please try again.");
+                return "reservation/room";
+            }
+
+            model.addAttribute("timeFrame", "Room name: " + roomName +". From date: " + startTime +". To date: " + endTime +".");
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            model.addAttribute("timeFrame", "Room name: " + roomName +". From date: " + startTime +".");
+        }
+        else if (startTime.length()==0 && endTime.length()!=0){
+            model.addAttribute("timeFrame", "Room name: " + roomName +". To date: " + endTime +".");
+        }
+
         model.addAttribute("room", roomDTOList);
 
         return  "reservation/room";

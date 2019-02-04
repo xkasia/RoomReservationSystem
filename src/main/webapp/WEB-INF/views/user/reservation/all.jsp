@@ -20,11 +20,13 @@
         <fieldset>
             <input type="submit" value="Submit"/>
         </fieldset>
+        <h6 style="color:red;">${wrongDataMsg}</h6>
     </form>
 
-    <h6 style="color:red;">${bookingSuccessMsq}</h6>
+    <h6 style="color:limegreen;">${bookingSuccessMsq}</h6>
 
     <div class="row center"><h2>Your Reservations</h2>
+        ${timeFrame}
         <table>
             <thead>
             <tr>

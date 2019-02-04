@@ -23,7 +23,6 @@ public class User {
     @Column(nullable = false, name = "last_name", length = 100, columnDefinition = "VARCHAR")
     private String lastName;
 
-    @Length(min = 6, max = 100, message = "{password.notEmpty}")
     @Column(nullable = false, columnDefinition = "VARCHAR", length = 100)
     private String password;
 

@@ -31,9 +31,11 @@
         <fieldset>
             <input type="submit" value="Submit"/>
         </fieldset>
+        <h6 style="color:red;">${wrongDataMsg}</h6>
     </form>
 
     <div class="row center"><h2>All Reservations</h2>
+        ${timeFrame}
         <table>
             <thead>
             <tr>

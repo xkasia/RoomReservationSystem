@@ -10,7 +10,7 @@
 <jsp:include page="elements/menu.jsp"/>
 <div class="container">
     <div class="row center"><h2>Login</h2>
-        <f:form modelAttribute="user" method="post" action="/home/login">
+        <f:form modelAttribute="user" method="post" action="/login">
             <p>Login:* <f:input path="login" type="text"/>
                 <f:errors path="login"/> </p>
             <p>Password:* <f:input path="password" type="password"/>

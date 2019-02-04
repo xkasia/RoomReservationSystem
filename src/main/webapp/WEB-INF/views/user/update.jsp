@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row center"><h4>Please fill in this form in order to update your data.
         account.</h4>
-        <title>Uptade form</title>
+        <title>Update form</title>
 
         <f:form modelAttribute="updatedUser" method="post" action="/user/update">
             <p>Current first name: ${user.firstName}: <f:input path="firstName" type="text"/>

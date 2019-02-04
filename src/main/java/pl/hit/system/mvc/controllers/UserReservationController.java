@@ -13,6 +13,8 @@ import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.ReservationDTO;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -39,15 +41,36 @@ public class UserReservationController {
     public String showPageWithBookedRooms(Model model, HttpSession session) {
         LoggedUserDTO userDTO = (LoggedUserDTO) session.getAttribute("user");
         List<ReservationDTO> reservationDTO = reservationService.getUserReservations(userDTO);
+
         model.addAttribute("reservations", reservationDTO);
         return "/user/reservation/all";
     }
 
     @PostMapping("show/reservations")
     public String showReservations(String startTime, String endTime, Model model, HttpSession session) {
+
         LoggedUserDTO userDTO = (LoggedUserDTO)session.getAttribute("user");
         reservationsDTOInTimeFrame =
                 reservationService.getUserReservationSInChoosedTimeFrame(userDTO, startTime, endTime);
+
+        if(startTime.length()!=0 && endTime.length()!=0){
+            if(LocalDateTime.parse(startTime).compareTo(LocalDateTime.parse(endTime))>0){
+                LoggedUserDTO usersDTO = (LoggedUserDTO) session.getAttribute("user");
+                List<ReservationDTO> reservationDTO = reservationService.getUserReservations(usersDTO);
+
+                model.addAttribute("reservations", reservationDTO);
+                model.addAttribute("wrongDataMsg", "End date can not be before start date. Please try again.");
+                return  "/user/reservation/all";
+            }
+            model.addAttribute("timeFrame", "From date: " + startTime +". To date: " + endTime +".");
+        }
+        else if(startTime.length()!=0 && endTime.length()==0){
+            model.addAttribute("timeFrame", "From date: " + startTime +".");
+        }
+        else if (startTime.length()==0 && endTime.length()!=0){
+            model.addAttribute("timeFrame", "To date: " + endTime +".");
+        }
+
         model.addAttribute("reservations", reservationsDTOInTimeFrame);
         return "/user/reservation/all";
     }

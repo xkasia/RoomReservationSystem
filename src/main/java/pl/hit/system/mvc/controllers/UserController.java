@@ -63,12 +63,12 @@ public class UserController {
         return "user/data";
     }
 
-    @GetMapping("delete")
+    @GetMapping("/delete")
     public String showDeletePage() {
         return "/user/delete";
     }
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public String delete(HttpSession session, String delete, Model model) {
 
         if (delete.equals("yes")) {

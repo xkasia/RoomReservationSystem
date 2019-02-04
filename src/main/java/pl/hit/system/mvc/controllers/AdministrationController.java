@@ -9,11 +9,9 @@ import pl.hit.system.core.forms.RoomUpdateForm;
 import pl.hit.system.core.forms.UserUpdateForm;
 import pl.hit.system.core.services.RoomsService;
 import pl.hit.system.core.services.UserService;
-import pl.hit.system.data.model.Room;
 import pl.hit.system.dto.LoggedUserDTO;
 import pl.hit.system.dto.RoomDTO;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;

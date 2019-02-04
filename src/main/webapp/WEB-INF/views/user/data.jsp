@@ -28,7 +28,7 @@ Password: ${user.password}</br>
 
 <a href="delete">Delete account.</a>
 
-    <h6 style="color:red;">${updateUserMsg}</h6>
+    <h6 style="color:limegreen;">${updateUserMsg}</h6>
 </div>
 
 </div>

@@ -5,14 +5,14 @@ CREATE TABLE users_roles (
   PRIMARY KEY (id)
 );
 
-INSERT INTO users (first_name, last_name, password, login,)VALUES ('John', 'Smith', 'qwerty', 'jsmith');
+INSERT INTO users (first_name, last_name, password, login,)VALUES ('John', 'Smith', '{noop}qwerty', 'jsmith');
 INSERT INTO users_roles (login, role) VALUES ('jsmith', 'ROLE_USER');
-INSERT INTO users (first_name, last_name, password, login,)VALUES ('Jane', 'Doe', 'mySecret', 'jdoe');
+INSERT INTO users (first_name, last_name, password, login,)VALUES ('Jane', 'Doe', '{noop}mySecret', 'jdoe');
 INSERT INTO users_roles (login, role) VALUES ('jdoe', 'ROLE_USER');
-INSERT INTO users (first_name, last_name, password, login,)VALUES ('Jane', 'Doe', 'password', 'login');
+INSERT INTO users (first_name, last_name, password, login,)VALUES ('Jane', 'Doe', '{noop}password', 'login');
 INSERT INTO users_roles (login, role) VALUES ('login', 'ROLE_USER');
 
-INSERT INTO users (first_name, last_name, password, login,)VALUES ('a', 'a', 'password', 'a');
+INSERT INTO users (first_name, last_name, password, login,)VALUES ('a', 'a', '{noop}password', 'a');
 INSERT INTO users_roles (login, role) VALUES ('a', 'ROLE_USER');
 INSERT INTO users_roles (login, role) VALUES ('a', 'ROLE_ADMIN');
 

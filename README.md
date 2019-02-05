@@ -15,8 +15,8 @@ Application allows:
  - present booking schedule for a user (display all bookings done by person)
  - present a report about room usage in particular time period
 
- Account, Book Room, All Reservations, My Reservations sections are dedicated for logged user.
- All Reservations, Show Users, Show Rooms sections are dedicated for administrator.
+ Account, Book Room, All Reservations, Rooms schedule, My Reservations sections are dedicated for logged user.
+ Show Users, Show Rooms sections are dedicated for administrator.
  
  Admin - usage case diagram.
  

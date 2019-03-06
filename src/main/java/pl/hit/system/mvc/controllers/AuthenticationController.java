@@ -1,7 +1,6 @@
 package pl.hit.system.mvc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,10 +20,6 @@ import java.io.IOException;
 public class AuthenticationController {
 
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired public void setPasswordEncoder( PasswordEncoder passwordEncoder)
-    { this.passwordEncoder = passwordEncoder; }
 
     @Autowired
     public AuthenticationController(UserService userService) {
@@ -51,8 +46,6 @@ public class AuthenticationController {
                     "Please try again.");
             return "/register";
         }
-
-        loggedUser.setPassword(passwordEncoder.encode(loggedUser.getPassword()));
 
         LoggedUserDTO loggedUserDTO = new LoggedUserDTO();
         loggedUserDTO.setFirstName(loggedUser.getFirstName());
@@ -85,8 +78,6 @@ public class AuthenticationController {
             model.addAttribute("errorMsg", "Valid login data. Please try again.");
             return "/login";
         }
-
-        userLoginForm.setPassword(passwordEncoder.encode(userLoginForm.getPassword()));
 
         LoggedUserDTO user = userService.getUser(userLoginForm.getLogin(), userLoginForm.getPassword());
         session.setAttribute("user", user);

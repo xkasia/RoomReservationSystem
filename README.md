@@ -1,6 +1,6 @@
 # RoomReservationSystem
 
-Simple application - Conference Room Reservation System.
+Web application - Conference Room Reservation System.
 
 The application is a tool, that would allow his employees to  book conference rooms that are available in the office.
 
@@ -18,5 +18,5 @@ Application allows:
  Account, Book Room, All Reservations, Rooms schedule, My Reservations sections are dedicated for logged user.
  Show Users, Show Rooms sections are dedicated for administrator.
  
- Admin - usage case diagram.
+ Admin data: login- aLogin, password- aPassword
  

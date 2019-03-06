@@ -12,9 +12,9 @@ INSERT INTO users_roles (login, role) VALUES ('jdoe', 'ROLE_USER');
 INSERT INTO users (first_name, last_name, password, login,)VALUES ('Jane', 'Doe', '{noop}password', 'login');
 INSERT INTO users_roles (login, role) VALUES ('login', 'ROLE_USER');
 
-INSERT INTO users (first_name, last_name, password, login,)VALUES ('a', 'a', '{noop}password', 'a');
-INSERT INTO users_roles (login, role) VALUES ('a', 'ROLE_USER');
-INSERT INTO users_roles (login, role) VALUES ('a', 'ROLE_ADMIN');
+INSERT INTO users (first_name, last_name, password, login,)VALUES ('Kasia', 'Lesniak', '{noop}aPassword', 'aLogin');
+INSERT INTO users_roles (login, role) VALUES ('aLogin', 'ROLE_USER');
+INSERT INTO users_roles (login, role) VALUES ('aPassword', 'ROLE_ADMIN');
 
 
 INSERT INTO rooms (name, location, number_of_seats, projector, phone_number)VALUES ('Large Room', '1st floor', 10, 'true', '22222222');
